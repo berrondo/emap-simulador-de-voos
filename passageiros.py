@@ -17,6 +17,7 @@ b) Tente fazer os cálculos da parte a) analiticamente.
 """
 
 from random import choice
+from operator import ne as sao_diferentes
 
 def escolhe_assento_aleatorio(a_partir_do=0):
     return assentos.pop(assentos.index(choice(assentos[a_partir_do:])))    
@@ -27,15 +28,32 @@ def escolhe_assento(passageiro):
     except ValueError:
         return (passageiro, escolhe_assento_aleatorio())
 
-n_repeticoes = 30
-N = 30
+n_repeticoes = 30000
+N = 1000
+total_de_passageiros_em_todas_as_repeticoes = N * n_repeticoes
+do_ultimo_assento = -1
+ULTIMOS_PASSAGEIROS_FORA_DE_SEUS_LUGARES = 0
+PASSAGEIROS_FORA_DE_SEUS_LUGARES = []
+
 for vez in range(n_repeticoes):
     passageiros = range(N)
     assentos = range(N)
 
-    pares = [(passageiros.pop(0), escolhe_assento_aleatorio(a_partir_do=1))]
+    passageiro_e_assento = [(passageiros.pop(0), escolhe_assento_aleatorio(a_partir_do=1))]
+    total_fora_do_lugar = 1
 
     while passageiros:
-        pares.append(escolhe_assento(passageiros.pop(0)))
+        passageiro_e_assento.append(escolhe_assento(passageiros.pop(0)))
+        
+        if sao_diferentes(*passageiro_e_assento[do_ultimo_assento]):
+            total_fora_do_lugar += 1
             
-    print pares
+    # print passageiro_e_assento
+    PASSAGEIROS_FORA_DE_SEUS_LUGARES.append(total_fora_do_lugar)
+    
+    if sao_diferentes(*passageiro_e_assento[do_ultimo_assento]):
+        ULTIMOS_PASSAGEIROS_FORA_DE_SEUS_LUGARES += 1
+
+print PASSAGEIROS_FORA_DE_SEUS_LUGARES
+print sum(PASSAGEIROS_FORA_DE_SEUS_LUGARES), total_de_passageiros_em_todas_as_repeticoes
+print ULTIMOS_PASSAGEIROS_FORA_DE_SEUS_LUGARES, total_de_passageiros_em_todas_as_repeticoes
