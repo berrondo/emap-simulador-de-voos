@@ -37,11 +37,6 @@ class Aviao:
         
         self.passageiro_e_assento = []
         
-    def embarca_primeiro(self, passageiro):
-        self.assentos.pop(0)        # retira o primeiro assento
-        self.embarca(passageiro)
-        self.assentos.insert(0, 0)  # coloca de volta o primeiro assento
-
     def embarca_ultimo(self, passageiro):
         assento = self.embarca(passageiro)
         if assento != passageiro:
@@ -82,7 +77,8 @@ while voos > aviao.numero_de_voos:  # quantidade de simulacoes
 
     aviao.novo_voo()
     
-    aviao.embarca_primeiro(passageiros.pop(0))
+    # ao renomear o primeiro passageiro, evita-se que ele escolha seu assento:
+    aviao.embarca(passageiros.pop(0)-1)
 
     for passageiro in passageiros[:-1]:
         aviao.embarca(passageiro)
