@@ -17,55 +17,70 @@ b) Tente fazer os cálculos da parte a) analiticamente.
 """
 
 from random import choice
-from operator import eq
+from operator import ne as sao_diferentes
 
 class Aviao:
     numero_de_voos = 0
     historico_de_passageiros_fora_de_seus_lugares = []
-    historico_de_ultimos_passageiros_fora_de_seus_lugares = []
-    passageiros_fora_de_seus_lugares_no_voo = 0
+    total_de_ultimos_passageiros_fora_de_seus_lugares = 0
     ultimo_assento = -1
     
-    def novo_voo(self, numero_de_assentos):
-        self.numero_de_voos += 1
-        self.historico_de_passageiros_fora_de_seus_lugares.append(self.passageiros_fora_de_seus_lugares_no_voo)
-        self.passageiros_fora_de_seus_lugares_no_voo = 0
-        self.assentos = range(numero_de_assentos)
+    def __init__(self, capacidade):
+        self.capacidade = capacidade
+        self.passageiro_e_assento = [(0, 0)]
     
-    def escolhe_assento_aleatorio(self, a_partir_do=0):
-        self.passageiros_fora_de_seus_lugares_no_voo += 1
+    def novo_voo(self):
+        self.numero_de_voos += 1
+        self.historico_de_passageiros_fora_de_seus_lugares.append(0)
+        
+        if self.ultimo_passageiro_nao_esta_em_seu_assento():
+            self.total_de_ultimos_passageiros_fora_de_seus_lugares += 1
+            
+        self.passageiro_e_assento = []
+        self.assentos = range(self.capacidade)
+    
+    def _escolhe_assento_aleatorio(self, a_partir_do=0):
+        self.historico_de_passageiros_fora_de_seus_lugares[-1] += 1
         return self.assentos.pop(self.assentos.index(choice(self.assentos[a_partir_do:])))    
 
     def escolhe_assento(self, passageiro):
         try:
-            return (passageiro, self.assentos.pop(self.assentos.index(passageiro)))
+            return self.assentos.pop(self.assentos.index(passageiro))
         except ValueError:
-            return (passageiro, self.escolhe_assento_aleatorio())
+            return self._escolhe_assento_aleatorio()
             
-    def ultimo_passageiro_esta_em_seu_assento(self):
-        return eq(*passageiro_e_assento[self.ultimo_assento])
+    def embarca(self, passageiro):
+        if passageiro == 0:  # o primeiro passageiro escolhe qualquer assento exceto o seu:
+            self.passageiro_e_assento.append((passageiro, self._escolhe_assento_aleatorio(a_partir_do=1)))
+        else:
+            self.passageiro_e_assento.append((passageiro, self.escolhe_assento(passageiro)))
+            
+    def ultimo_passageiro_nao_esta_em_seu_assento(self):
+        return sao_diferentes(*self.passageiro_e_assento[self.ultimo_assento])
+        
+    def relatorio_de_voos(self):
+        print "total de passageiros transportados:", 
+        print self.numero_de_voos * self.capacidade
+        print "total de passageiros transportados fora de seus lugares:", 
+        print sum(self.historico_de_passageiros_fora_de_seus_lugares)
+        print "total de ultimos passageiros transportados fora de seus lugares:", 
+        print self.total_de_ultimos_passageiros_fora_de_seus_lugares, self.numero_de_voos * self.capacidade
 
 
-n_repeticoes = 3000
-N = 100
-do_ultimo_assento = -1
-ULTIMOS_PASSAGEIROS_FORA_DE_SEUS_LUGARES = 0
+voos = 10000
+passageiros_por_voo = 100
+passageiros_transportados = passageiros_por_voo * voos
 
-aviao = Aviao()
+aviao = Aviao(passageiros_por_voo)
 
-for vez in range(n_repeticoes):
-    passageiros = range(N)
+while voos:  # quantidade de simulacoes
+    passageiros = xrange(passageiros_por_voo)
+
+    aviao.novo_voo()
+
+    for passageiro in passageiros:
+        aviao.embarca(passageiro)
+        
+    voos -= 1
     
-    aviao.novo_voo(N)
-
-    passageiro_e_assento = [(passageiros.pop(0), aviao.escolhe_assento_aleatorio(a_partir_do=1))]
-
-    while passageiros:
-        passageiro_e_assento.append(aviao.escolhe_assento(passageiros.pop(0)))
-    
-    if not eq(*passageiro_e_assento[do_ultimo_assento]):
-        ULTIMOS_PASSAGEIROS_FORA_DE_SEUS_LUGARES += 1
-
-print "total de passageiros transportados:", aviao.numero_de_voos * N
-print "total de passageiros transportados fora de seus lugares:", sum(aviao.historico_de_passageiros_fora_de_seus_lugares)
-print "total de ultimos passageiros transportados fora de seus lugares:", ULTIMOS_PASSAGEIROS_FORA_DE_SEUS_LUGARES, aviao.numero_de_voos * N
+aviao.relatorio_de_voos()
