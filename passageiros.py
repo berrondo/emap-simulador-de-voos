@@ -18,23 +18,22 @@ b) Tente fazer os cálculos da parte a) analiticamente.
 
 from random import choice
 
+def escolhe_assento_aleatorio(a_partir_do=0):
+    return assentos.pop(assentos.index(choice(assentos[a_partir_do:])))    
 
-def assento_aleatorio(a_partir_do_indice=0):
-    return assentos.pop(assentos.index(choice(assentos[a_partir_do_indice:])))    
-
-def escolhe_assento(p):
+def escolhe_assento(passageiro):
     try:
-        return (p, assentos.pop(assentos.index(p)))
+        return (passageiro, assentos.pop(assentos.index(passageiro)))
     except ValueError:
-        return (p, assento_aleatorio())
+        return (passageiro, escolhe_assento_aleatorio())
 
-n_repeticoes = 10
-N = 20
+n_repeticoes = 30
+N = 30
 for vez in range(n_repeticoes):
     passageiros = range(N)
     assentos = range(N)
 
-    pares = [(passageiros.pop(0), assento_aleatorio(a_partir_do_indice=1))]
+    pares = [(passageiros.pop(0), escolhe_assento_aleatorio(a_partir_do=1))]
 
     while passageiros:
         pares.append(escolhe_assento(passageiros.pop(0)))
