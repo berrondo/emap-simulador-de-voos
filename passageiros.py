@@ -18,26 +18,22 @@ b) Tente fazer os cálculos da parte a) analiticamente.
 
 from random import choice
 
-n_repeticoes = 1
+n_repeticoes = 2
 
 N = 10
-passageiros = range(N)
-assentos = range(N)
-
 def assento_aleatorio(primeiro_passageiro=False):
     if primeiro_passageiro:
         return assentos.pop(assentos.index(choice(assentos[1:])))  
     return assentos.pop(assentos.index(choice(assentos)))    
 
-
-p = passageiros.pop(0)
-pares = [(p, assento_aleatorio(primeiro_passageiro=True))]
-
-#print (primeiro_passageiro,primeiro_assento_aleatorio,
-#       assentos,passageiros,pares)
-       
-
+    
 for vez in range(n_repeticoes):
+    passageiros = range(N)
+    assentos = range(N)
+
+    p = passageiros.pop(0)
+    pares = [(p, assento_aleatorio(primeiro_passageiro=True))]
+
     while passageiros:
         p = passageiros.pop(0)
         try:
