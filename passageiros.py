@@ -20,20 +20,22 @@ from random import choice
 
 n_repeticoes = 1
 
-N = 100
+N = 10
 passageiros = range(N)
 assentos = range(N)
 
-primeiro_passageiro = passageiros.pop(0)
-primeiro_assento_aleatorio = choice(assentos[1:])
-assentos.remove(primeiro_assento_aleatorio)
-pares = [(primeiro_passageiro, primeiro_assento_aleatorio)]
+def assento_aleatorio(primeiro_passageiro=False):
+    if primeiro_passageiro:
+        return assentos.pop(assentos.index(choice(assentos[1:])))  
+    return assentos.pop(assentos.index(choice(assentos)))    
+
+
+p = passageiros.pop(0)
+pares = [(p, assento_aleatorio(primeiro_passageiro=True))]
 
 #print (primeiro_passageiro,primeiro_assento_aleatorio,
 #       assentos,passageiros,pares)
        
-def assento_aleatorio():
-    return assentos.pop(assentos.index(choice(assentos)))    
 
 for vez in range(n_repeticoes):
     while passageiros:
