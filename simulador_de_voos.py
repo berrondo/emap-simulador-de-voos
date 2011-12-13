@@ -32,6 +32,7 @@ class Aviao:
         self.capacidade = capacidade
     
     def novo_voo(self):
+        #print self.numero_de_voos,
         self.numero_de_voos += 1
         self.historico_de_passageiros_fora_de_seus_lugares.append(0)
         self.assentos = range(self.capacidade)
@@ -43,17 +44,17 @@ class Aviao:
         if assento != passageiro:
             self.total_de_ultimos_passageiros_fora_de_seus_lugares += 1
 
-    def embarca(self, passageiro):
+    def embarca(self, passageiro, a_partir_do=0):
         try:
             assento = self.assentos.pop(self.assentos.index(passageiro))
         except ValueError:
-            assento = self._escolhe_assento_aleatorio()
+            assento = self._escolhe_assento_aleatorio(a_partir_do)
         self.passageiro_e_assento.append((passageiro, assento))
         return assento
             
-    def _escolhe_assento_aleatorio(self):
+    def _escolhe_assento_aleatorio(self, a_partir_do=0):
         self.historico_de_passageiros_fora_de_seus_lugares[-1] += 1
-        return self.assentos.pop(self.assentos.index(choice(self.assentos)))
+        return self.assentos.pop(self.assentos.index(choice(self.assentos[a_partir_do:])))
 
     def relatorio_de_voos(self):
         passageiros_transportados = self.numero_de_voos * self.capacidade
@@ -67,8 +68,8 @@ class Aviao:
         print self.total_de_ultimos_passageiros_fora_de_seus_lugares
 
 
-voos = 100
-passageiros_por_voo = 25
+voos = 1000
+passageiros_por_voo = 100
 
 aviao = Aviao(passageiros_por_voo)
 
@@ -81,15 +82,15 @@ while voos > aviao.numero_de_voos:  # quantidade de simulacoes
     aviao.novo_voo()
     
     # ao renomear o primeiro passageiro, evita-se que ele escolha seu assento:
-    aviao.embarca(passageiros.pop(0)-1)
+    aviao.embarca(passageiros.pop(0)-1, a_partir_do=1)
 
     for passageiro in passageiros[:-1]:
         aviao.embarca(passageiro)
         
     aviao.embarca_ultimo(passageiros.pop())
     
-    # este_voo = aviao.passageiro_e_assento
-    # print este_voo,
+    este_voo = aviao.passageiro_e_assento
+    #print este_voo
     # total_de_passageiros_fora_de_seus_lugares = len([par for par in este_voo if sao_diferentes(*par)])
     # print total_de_passageiros_fora_de_seus_lugares, 'fora de seus assentos'
     # TOTAL_PASSAGEIROS_FORA_DE_SEUS_LUGARES += total_de_passageiros_fora_de_seus_lugares
@@ -100,3 +101,8 @@ while voos > aviao.numero_de_voos:  # quantidade de simulacoes
 # print TOTAL_PASSAGEIROS_FORA_DE_SEUS_LUGARES
 
 aviao.relatorio_de_voos()
+print aviao.historico_de_passageiros_fora_de_seus_lugares
+print
+print mean(aviao.historico_de_passageiros_fora_de_seus_lugares)
+print std(aviao.historico_de_passageiros_fora_de_seus_lugares)
+print median(aviao.historico_de_passageiros_fora_de_seus_lugares)
