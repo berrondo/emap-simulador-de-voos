@@ -26,8 +26,8 @@ from numpy import mean, std, median
 
 class Aviao:
     numero_de_voos = 0
-    historico_de_passageiros_fora_de_seus_lugares = []
-    total_de_ultimos_passageiros_fora_de_seus_lugares = 0
+    passageiros_fora_de_seus_lugares = []
+    ultimos_passageiros_fora_de_seus_lugares = 0
     
     def __init__(self, capacidade):
         self.capacidade = capacidade
@@ -35,7 +35,7 @@ class Aviao:
     def novo_voo(self):
         #print self.numero_de_voos,
         self.numero_de_voos += 1
-        self.historico_de_passageiros_fora_de_seus_lugares.append(0)
+        self.passageiros_fora_de_seus_lugares.append(0)
         self.assentos = range(self.capacidade)
         
         self.passageiro_e_assento = []
@@ -43,7 +43,7 @@ class Aviao:
     def embarca_ultimo(self, passageiro):
         assento = self.embarca(passageiro)
         if assento != passageiro:
-            self.total_de_ultimos_passageiros_fora_de_seus_lugares += 1
+            self.ultimos_passageiros_fora_de_seus_lugares += 1
 
     def embarca(self, passageiro):
         try:
@@ -51,7 +51,7 @@ class Aviao:
         except ValueError:
             assento = self.assentos.pop(self.assentos.index(choice(self.assentos)))
             # contabiliza este passageiro fora de seu assento:
-            self.historico_de_passageiros_fora_de_seus_lugares[-1] += 1
+            self.passageiros_fora_de_seus_lugares[-1] += 1
             
         self.passageiro_e_assento.append((passageiro, assento))
         return assento
@@ -63,18 +63,18 @@ class Aviao:
         print "total de passageiros transportados:", 
         print passageiros_transportados
         print "total de passageiros transportados fora de seus lugares:", 
-        print sum(self.historico_de_passageiros_fora_de_seus_lugares)
+        print sum(self.passageiros_fora_de_seus_lugares)
         print "total de ultimos passageiros transportados fora de seus lugares:", 
-        print self.total_de_ultimos_passageiros_fora_de_seus_lugares
+        print self.ultimos_passageiros_fora_de_seus_lugares
 
 
-voos = 10000
+voos = 1000
 passageiros_por_voo = 100
 
 aviao = Aviao(passageiros_por_voo)
 
-# TOTAL_PASSAGEIROS_FORA_DE_SEUS_LUGARES = 0
-# TOTAL_DE_ULTIMOS_PASSAGEIROS_FORA_DE_SEUS_LUGARES = 0
+# PASSAGEIROS_FORA_DE_SEUS_LUGARES = 0
+# ULTIMOS_PASSAGEIROS_FORA_DE_SEUS_LUGARES = 0
 while voos > aviao.numero_de_voos:  # quantidade de simulacoes
 
     passageiros = range(passageiros_por_voo)
@@ -90,18 +90,19 @@ while voos > aviao.numero_de_voos:  # quantidade de simulacoes
     
     #este_voo = aviao.passageiro_e_assento
     #print este_voo
-    # total_de_passageiros_fora_de_seus_lugares = len([par for par in este_voo if sao_diferentes(*par)])
-    # print total_de_passageiros_fora_de_seus_lugares, 'fora de seus assentos'
-    # TOTAL_PASSAGEIROS_FORA_DE_SEUS_LUGARES += total_de_passageiros_fora_de_seus_lugares
+    # passageiros_fora_de_seus_lugares = len([par for par in este_voo if sao_diferentes(*par)])
+    # print passageiros_fora_de_seus_lugares, 'fora de seus assentos'
+    # PASSAGEIROS_FORA_DE_SEUS_LUGARES += passageiros_fora_de_seus_lugares
     # if sao_diferentes(*este_voo[-1]):
-        # TOTAL_DE_ULTIMOS_PASSAGEIROS_FORA_DE_SEUS_LUGARES += 1
+        # ULTIMOS_PASSAGEIROS_FORA_DE_SEUS_LUGARES += 1
     
-# print TOTAL_DE_ULTIMOS_PASSAGEIROS_FORA_DE_SEUS_LUGARES
-# print TOTAL_PASSAGEIROS_FORA_DE_SEUS_LUGARES
+# print ULTIMOS_PASSAGEIROS_FORA_DE_SEUS_LUGARES
+# print PASSAGEIROS_FORA_DE_SEUS_LUGARES
 
 aviao.relatorio_de_voos()
-# print aviao.historico_de_passageiros_fora_de_seus_lugares
+# print aviao.passageiros_fora_de_seus_lugares
 print
-print mean(aviao.historico_de_passageiros_fora_de_seus_lugares)
-print std(aviao.historico_de_passageiros_fora_de_seus_lugares)
-print median(aviao.historico_de_passageiros_fora_de_seus_lugares)
+print 'passageiros fora de seus assentos:'
+print 'media:', mean(aviao.passageiros_fora_de_seus_lugares)
+print 'desvio padrao:', std(aviao.passageiros_fora_de_seus_lugares)
+print 'mediana:', median(aviao.passageiros_fora_de_seus_lugares)
