@@ -61,10 +61,8 @@ class Aviao:
         percentual_de_passageiros_fora_de_seus_assentos = (1.0*passageiros_fora_de_seus_assentos / passageiros_transportados) * 100
         percentual_de_ultimos_passageiros_no_assento_correto = (1.0*ultimos_passageiros_no_assento_correto / numero_de_voos) * 100
         
-        print
-        print "total de voos:", numero_de_voos,
-        print " - total de passageiros transportados:", passageiros_transportados
-        print
+        print "\n%s de passageiros transportados em %s voos\n" % (passageiros_transportados, numero_de_voos)
+        
         print "total de ultimos passageiros no assento correto:", 
         print ultimos_passageiros_no_assento_correto, "em", self.numero_de_voos,
         print "(%.2f%%)" % percentual_de_ultimos_passageiros_no_assento_correto
@@ -73,7 +71,9 @@ class Aviao:
         print "(%.2f%%)" % percentual_de_passageiros_fora_de_seus_assentos
         print '    media:', mean(self.passageiros_fora_de_seus_assentos),
         print '    desvio padrao: %.2f' % std(self.passageiros_fora_de_seus_assentos),
-        print '    mediana:', median(self.passageiros_fora_de_seus_assentos)
+        print '    mediana:', median(self.passageiros_fora_de_seus_assentos),
+        print '    max:', max(self.passageiros_fora_de_seus_assentos),
+        print '    min:', min(self.passageiros_fora_de_seus_assentos)
         print
 
 
