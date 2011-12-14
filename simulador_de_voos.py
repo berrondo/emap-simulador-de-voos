@@ -22,7 +22,7 @@ Created on Fri Dez 09 21:34:08 2011
 
 from random import choice
 from numpy import mean, std, median
-# from operator import ne as sao_diferentes
+from operator import ne as sao_diferentes
 
 class Aviao:
     numero_de_voos = 0
@@ -72,8 +72,8 @@ passageiros_por_voo = 100
 
 aviao = Aviao(passageiros_por_voo)
 
-# PASSAGEIROS_FORA_DE_SEUS_LUGARES = 0
-# ULTIMOS_PASSAGEIROS_EM_SEUS_LUGARES = 0
+PASSAGEIROS_FORA_DE_SEUS_LUGARES = 0
+ULTIMOS_PASSAGEIROS_EM_SEUS_LUGARES = 0
 while voos > aviao.numero_de_voos:  # quantidade de simulacoes
 
     passageiros = range(passageiros_por_voo)
@@ -87,16 +87,16 @@ while voos > aviao.numero_de_voos:  # quantidade de simulacoes
         
     aviao.verifica_ultimo_passageiro(passageiro, assento)
     
-    #este_voo = aviao.passageiro_e_assento
+    este_voo = aviao.passageiro_e_assento
     #print este_voo
-    # passageiros_fora_de_seus_lugares = len([par for par in este_voo if sao_diferentes(*par)])
-    # print passageiros_fora_de_seus_lugares, 'fora de seus assentos'
-    # PASSAGEIROS_FORA_DE_SEUS_LUGARES += passageiros_fora_de_seus_lugares
-    # if sao_diferentes(*este_voo[-1]):
-        # ULTIMOS_PASSAGEIROS_EM_SEUS_LUGARES += 1
+    passageiros_fora_de_seus_lugares = len([par for par in este_voo if sao_diferentes(*par)])
+    print passageiros_fora_de_seus_lugares, 'fora de seus assentos'
+    PASSAGEIROS_FORA_DE_SEUS_LUGARES += passageiros_fora_de_seus_lugares
+    if not sao_diferentes(*este_voo[-1]):
+        ULTIMOS_PASSAGEIROS_EM_SEUS_LUGARES += 1
     
-# print ULTIMOS_PASSAGEIROS_EM_SEUS_LUGARES
-# print PASSAGEIROS_FORA_DE_SEUS_LUGARES
+print ULTIMOS_PASSAGEIROS_EM_SEUS_LUGARES
+print PASSAGEIROS_FORA_DE_SEUS_LUGARES
 
 aviao.relatorio_de_voos()
 # print aviao.passageiros_fora_de_seus_lugares
