@@ -49,13 +49,11 @@ class Aviao:
         try:
             assento = self.assentos.pop(self.assentos.index(passageiro))
         except ValueError:
-            assento = self._escolhe_assento_aleatorio()
+            assento = self.assentos.pop(self.assentos.index(choice(self.assentos)))
+            self.historico_de_passageiros_fora_de_seus_lugares[-1] += 1
+            
         self.passageiro_e_assento.append((passageiro, assento))
         return assento
-            
-    def _escolhe_assento_aleatorio(self):
-        self.historico_de_passageiros_fora_de_seus_lugares[-1] += 1
-        return self.assentos.pop(self.assentos.index(choice(self.assentos)))
 
     def relatorio_de_voos(self):
         passageiros_transportados = self.numero_de_voos * self.capacidade
