@@ -55,6 +55,9 @@ class Aviao:
             
         self.passageiro_e_assento.append((passageiro, assento))
         return assento
+        
+    def verifica_ultimo_passageiro(self, passageiro, assento):
+        pass
 
     def relatorio_de_voos(self):
         passageiros_transportados = self.numero_de_voos * self.capacidade
