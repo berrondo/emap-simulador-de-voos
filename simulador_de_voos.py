@@ -50,6 +50,7 @@ class Aviao:
             assento = self.assentos.pop(self.assentos.index(passageiro))
         except ValueError:
             assento = self.assentos.pop(self.assentos.index(choice(self.assentos)))
+            # contabiliza este passageiro fora de seu assento:
             self.historico_de_passageiros_fora_de_seus_lugares[-1] += 1
             
         self.passageiro_e_assento.append((passageiro, assento))
@@ -77,12 +78,11 @@ aviao = Aviao(passageiros_por_voo)
 while voos > aviao.numero_de_voos:  # quantidade de simulacoes
 
     passageiros = range(passageiros_por_voo)
+    # renomear primeiro passageiro forca escolha aleatoria do assento:
+    passageiros[0] = -1
 
     aviao.novo_voo()
     
-    # ao renomear o primeiro passageiro, evita-se que ele escolha seu assento:
-    aviao.embarca(passageiros.pop(0)-1)
-
     for passageiro in passageiros[:-1]:
         aviao.embarca(passageiro)
         
