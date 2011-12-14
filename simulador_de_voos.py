@@ -40,11 +40,6 @@ class Aviao:
         
         self.passageiro_e_assento = []
         
-    def embarca_ultimo(self, passageiro):
-        assento = self.embarca(passageiro)
-        if assento == passageiro:
-            self.ultimos_passageiros_em_seus_lugares += 1
-
     def embarca(self, passageiro):
         try:
             assento = self.assentos.pop(self.assentos.index(passageiro))
@@ -57,7 +52,8 @@ class Aviao:
         return assento
         
     def verifica_ultimo_passageiro(self, passageiro, assento):
-        pass
+        if passageiro == assento:
+            self.ultimos_passageiros_em_seus_lugares += 1
 
     def relatorio_de_voos(self):
         passageiros_transportados = self.numero_de_voos * self.capacidade
@@ -81,15 +77,15 @@ aviao = Aviao(passageiros_por_voo)
 while voos > aviao.numero_de_voos:  # quantidade de simulacoes
 
     passageiros = range(passageiros_por_voo)
-    # renomear primeiro passageiro forca escolha aleatoria do assento:
+    # renomear primeiro passageiro forca assento aleatorio:
     passageiros[0] = -1
 
     aviao.novo_voo()
     
-    for passageiro in passageiros[:-1]:
-        aviao.embarca(passageiro)
+    for passageiro in passageiros:
+        assento = aviao.embarca(passageiro)
         
-    aviao.embarca_ultimo(passageiros.pop())
+    aviao.verifica_ultimo_passageiro(passageiro, assento)
     
     #este_voo = aviao.passageiro_e_assento
     #print este_voo
