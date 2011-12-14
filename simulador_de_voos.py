@@ -45,17 +45,17 @@ class Aviao:
         if assento != passageiro:
             self.total_de_ultimos_passageiros_fora_de_seus_lugares += 1
 
-    def embarca(self, passageiro, a_partir_do=0):
+    def embarca(self, passageiro):
         try:
             assento = self.assentos.pop(self.assentos.index(passageiro))
         except ValueError:
-            assento = self._escolhe_assento_aleatorio(a_partir_do)
+            assento = self._escolhe_assento_aleatorio()
         self.passageiro_e_assento.append((passageiro, assento))
         return assento
             
-    def _escolhe_assento_aleatorio(self, a_partir_do=0):
+    def _escolhe_assento_aleatorio(self):
         self.historico_de_passageiros_fora_de_seus_lugares[-1] += 1
-        return self.assentos.pop(self.assentos.index(choice(self.assentos[a_partir_do:])))
+        return self.assentos.pop(self.assentos.index(choice(self.assentos)))
 
     def relatorio_de_voos(self):
         passageiros_transportados = self.numero_de_voos * self.capacidade
@@ -83,7 +83,7 @@ while voos > aviao.numero_de_voos:  # quantidade de simulacoes
     aviao.novo_voo()
     
     # ao renomear o primeiro passageiro, evita-se que ele escolha seu assento:
-    aviao.embarca(passageiros.pop(0)-1, a_partir_do=0)
+    aviao.embarca(passageiros.pop(0)-1)
 
     for passageiro in passageiros[:-1]:
         aviao.embarca(passageiro)
