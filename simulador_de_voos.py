@@ -43,8 +43,10 @@ class Aviao:
             assento = self.assentos.pop(self.assentos.index(passageiro))
         except ValueError:
             assento = self.assentos.pop(self.assentos.index(choice(self.assentos)))
-            # contabiliza este passageiro fora de seu assento:
-            self.passageiros_fora_de_seus_assentos[-1] += 1
+            # contabiliza este passageiro fora de seu assento,
+            # descontando o caso do primeiro passageiro renomeado:
+            if not (passageiro == -1 and assento == 0):
+                self.passageiros_fora_de_seus_assentos[-1] += 1
             
         self.passageiro_e_assento.append((passageiro, assento))
         return assento
@@ -61,13 +63,13 @@ class Aviao:
         percentual_de_passageiros_fora_de_seus_assentos = (1.0*passageiros_fora_de_seus_assentos / passageiros_transportados) * 100
         percentual_de_ultimos_passageiros_no_assento_correto = (1.0*ultimos_passageiros_no_assento_correto / numero_de_voos) * 100
         
-        print "\n%s de passageiros transportados em %s voos\n" % (passageiros_transportados, numero_de_voos)
+        print "\n%s passageiros transportados em %s voos\n" % (passageiros_transportados, numero_de_voos)
         
-        print "total de ultimos passageiros no assento correto:", 
+        print "ultimos passageiros no assento correto:", 
         print ultimos_passageiros_no_assento_correto, "em", self.numero_de_voos,
         print "(%.2f%%)" % percentual_de_ultimos_passageiros_no_assento_correto
         print
-        print "total de passageiros fora de seus assentos:", passageiros_fora_de_seus_assentos,
+        print "passageiros fora de seus assentos:", passageiros_fora_de_seus_assentos,
         print "(%.2f%%)" % percentual_de_passageiros_fora_de_seus_assentos
         print '    media:', mean(self.passageiros_fora_de_seus_assentos),
         print '    desvio padrao: %.2f' % std(self.passageiros_fora_de_seus_assentos),
@@ -77,7 +79,7 @@ class Aviao:
         print
 
 
-voos = 10000
+voos = 1000
 passageiros_por_voo = 100
 aviao = Aviao(passageiros_por_voo)
 
