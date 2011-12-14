@@ -50,8 +50,8 @@ class Aviao:
         self.passageiro_e_assento.append((passageiro, assento))
         return assento
         
-    def verifica_ultimo_passageiro(self, passageiro, assento):
-        if passageiro == assento:
+    def verifica_o_ultimo(self, passageiro_esta, em_seu_assento):
+        if passageiro_esta == em_seu_assento:
             self.ultimos_passageiros_em_seus_lugares += 1
 
     def relatorio_de_voos(self):
@@ -80,9 +80,9 @@ while voos > aviao.numero_de_voos:  # quantidade de simulacoes
     aviao.novo_voo()
     
     for passageiro in passageiros:
-        assento = aviao.embarca(passageiro)
+        em_seu_assento = aviao.embarca(passageiro)
         
-    aviao.verifica_ultimo_passageiro(passageiro, assento)
+    aviao.verifica_o_ultimo(passageiro, em_seu_assento)
     
 aviao.relatorio_de_voos()
 # print aviao.passageiros_fora_de_seus_lugares
