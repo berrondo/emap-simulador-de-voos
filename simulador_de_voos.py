@@ -32,7 +32,6 @@ class Aviao:
         self.capacidade = capacidade
     
     def novo_voo(self):
-        #print self.numero_de_voos,
         self.numero_de_voos += 1
         self.passageiros_fora_de_seus_assentos.append(0)
         self.assentos = range(self.capacidade)
@@ -59,22 +58,27 @@ class Aviao:
         passageiros_transportados = self.numero_de_voos * self.capacidade
         passageiros_fora_de_seus_assentos = sum(self.passageiros_fora_de_seus_assentos)
         ultimos_passageiros_no_assento_correto = self.ultimos_passageiros_no_assento_correto
-        print "total de voos:",
-        print numero_de_voos
-        print "total de passageiros transportados:", 
-        print passageiros_transportados
-        print "total de passageiros fora de seus assentos:", 
-        print passageiros_fora_de_seus_assentos,
-        print "(%.2f%%)" % ((1.0*passageiros_fora_de_seus_assentos / passageiros_transportados) * 100)
+        percentual_de_passageiros_fora_de_seus_assentos = (1.0*passageiros_fora_de_seus_assentos / passageiros_transportados) * 100
+        percentual_de_ultimos_passageiros_no_assento_correto = (1.0*ultimos_passageiros_no_assento_correto / numero_de_voos) * 100
+        
+        print
+        print "total de voos:", numero_de_voos,
+        print " - total de passageiros transportados:", passageiros_transportados
+        print
         print "total de ultimos passageiros no assento correto:", 
-        print ultimos_passageiros_no_assento_correto,
-        print "em", self.numero_de_voos,
-        print "(%.2f%%)" % ((1.0*ultimos_passageiros_no_assento_correto / numero_de_voos) * 100)
+        print ultimos_passageiros_no_assento_correto, "em", self.numero_de_voos,
+        print "(%.2f%%)" % percentual_de_ultimos_passageiros_no_assento_correto
+        print
+        print "total de passageiros fora de seus assentos:", passageiros_fora_de_seus_assentos,
+        print "(%.2f%%)" % percentual_de_passageiros_fora_de_seus_assentos
+        print '    media:', mean(self.passageiros_fora_de_seus_assentos),
+        print '    desvio padrao: %.2f' % std(self.passageiros_fora_de_seus_assentos),
+        print '    mediana:', median(self.passageiros_fora_de_seus_assentos)
+        print
 
 
-voos = 1000
+voos = 10000
 passageiros_por_voo = 100
-
 aviao = Aviao(passageiros_por_voo)
 
 while voos > aviao.numero_de_voos:  # quantidade de simulacoes
@@ -91,9 +95,3 @@ while voos > aviao.numero_de_voos:  # quantidade de simulacoes
     aviao.verifica_o_ultimo(passageiro, em_seu_assento)
     
 aviao.relatorio_de_voos()
-# print aviao.passageiros_fora_de_seus_assentos
-print
-print 'passageiros fora de seus assentos:'
-print 'media:', mean(aviao.passageiros_fora_de_seus_assentos)
-print 'desvio padrao:', std(aviao.passageiros_fora_de_seus_assentos)
-print 'mediana:', median(aviao.passageiros_fora_de_seus_assentos)
