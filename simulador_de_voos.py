@@ -27,7 +27,7 @@ from numpy import mean, std, median
 class Aviao:
     numero_de_voos = 0
     passageiros_fora_de_seus_lugares = []
-    ultimos_passageiros_fora_de_seus_lugares = 0
+    ultimos_passageiros_em_seus_lugares = 0
     
     def __init__(self, capacidade):
         self.capacidade = capacidade
@@ -42,8 +42,8 @@ class Aviao:
         
     def embarca_ultimo(self, passageiro):
         assento = self.embarca(passageiro)
-        if assento != passageiro:
-            self.ultimos_passageiros_fora_de_seus_lugares += 1
+        if assento == passageiro:
+            self.ultimos_passageiros_em_seus_lugares += 1
 
     def embarca(self, passageiro):
         try:
@@ -67,8 +67,8 @@ class Aviao:
         print passageiros_transportados
         print "total de passageiros transportados fora de seus lugares:", 
         print sum(self.passageiros_fora_de_seus_lugares)
-        print "total de ultimos passageiros transportados fora de seus lugares:", 
-        print self.ultimos_passageiros_fora_de_seus_lugares
+        print "total de ultimos passageiros transportados em seus lugares:", 
+        print self.ultimos_passageiros_em_seus_lugares
 
 
 voos = 1000
@@ -77,7 +77,7 @@ passageiros_por_voo = 100
 aviao = Aviao(passageiros_por_voo)
 
 # PASSAGEIROS_FORA_DE_SEUS_LUGARES = 0
-# ULTIMOS_PASSAGEIROS_FORA_DE_SEUS_LUGARES = 0
+# ULTIMOS_PASSAGEIROS_EM_SEUS_LUGARES = 0
 while voos > aviao.numero_de_voos:  # quantidade de simulacoes
 
     passageiros = range(passageiros_por_voo)
@@ -97,9 +97,9 @@ while voos > aviao.numero_de_voos:  # quantidade de simulacoes
     # print passageiros_fora_de_seus_lugares, 'fora de seus assentos'
     # PASSAGEIROS_FORA_DE_SEUS_LUGARES += passageiros_fora_de_seus_lugares
     # if sao_diferentes(*este_voo[-1]):
-        # ULTIMOS_PASSAGEIROS_FORA_DE_SEUS_LUGARES += 1
+        # ULTIMOS_PASSAGEIROS_EM_SEUS_LUGARES += 1
     
-# print ULTIMOS_PASSAGEIROS_FORA_DE_SEUS_LUGARES
+# print ULTIMOS_PASSAGEIROS_EM_SEUS_LUGARES
 # print PASSAGEIROS_FORA_DE_SEUS_LUGARES
 
 aviao.relatorio_de_voos()
