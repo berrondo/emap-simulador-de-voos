@@ -79,12 +79,11 @@ class Aviao:
         print
 
 
-voos = 1000
+voos = 10000
 passageiros_por_voo = 100
 aviao = Aviao(passageiros_por_voo)
 
-while voos > aviao.numero_de_voos:  # quantidade de simulacoes
-
+while aviao.numero_de_voos < voos:  # quantidade de simulacoes
     passageiros = range(passageiros_por_voo)
     # renomear primeiro passageiro forca assento aleatorio:
     passageiros[0] = -1
