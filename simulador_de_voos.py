@@ -25,8 +25,8 @@ from numpy import mean, std, median
 
 class Aviao:
     numero_de_voos = 0
-    passageiros_fora_de_seus_lugares = []
-    ultimos_passageiros_em_seus_lugares = 0
+    passageiros_fora_de_seus_assentos = []
+    ultimos_passageiros_no_assento_correto = 0
     
     def __init__(self, capacidade):
         self.capacidade = capacidade
@@ -34,7 +34,7 @@ class Aviao:
     def novo_voo(self):
         #print self.numero_de_voos,
         self.numero_de_voos += 1
-        self.passageiros_fora_de_seus_lugares.append(0)
+        self.passageiros_fora_de_seus_assentos.append(0)
         self.assentos = range(self.capacidade)
         
         self.passageiro_e_assento = []
@@ -45,14 +45,14 @@ class Aviao:
         except ValueError:
             assento = self.assentos.pop(self.assentos.index(choice(self.assentos)))
             # contabiliza este passageiro fora de seu assento:
-            self.passageiros_fora_de_seus_lugares[-1] += 1
+            self.passageiros_fora_de_seus_assentos[-1] += 1
             
         self.passageiro_e_assento.append((passageiro, assento))
         return assento
         
     def verifica_o_ultimo(self, passageiro_esta, em_seu_assento):
         if passageiro_esta == em_seu_assento:
-            self.ultimos_passageiros_em_seus_lugares += 1
+            self.ultimos_passageiros_no_assento_correto += 1
 
     def relatorio_de_voos(self):
         passageiros_transportados = self.numero_de_voos * self.capacidade
@@ -60,10 +60,10 @@ class Aviao:
         print self.numero_de_voos
         print "total de passageiros transportados:", 
         print passageiros_transportados
-        print "total de passageiros transportados fora de seus lugares:", 
-        print sum(self.passageiros_fora_de_seus_lugares)
-        print "total de ultimos passageiros transportados em seus lugares:", 
-        print self.ultimos_passageiros_em_seus_lugares
+        print "total de passageiros transportados fora de seus assentos:", 
+        print sum(self.passageiros_fora_de_seus_assentos)
+        print "total de ultimos passageiros transportados em seus assentos:", 
+        print self.ultimos_passageiros_no_assento_correto
 
 
 voos = 1000
@@ -85,9 +85,9 @@ while voos > aviao.numero_de_voos:  # quantidade de simulacoes
     aviao.verifica_o_ultimo(passageiro, em_seu_assento)
     
 aviao.relatorio_de_voos()
-# print aviao.passageiros_fora_de_seus_lugares
+# print aviao.passageiros_fora_de_seus_assentos
 print
 print 'passageiros fora de seus assentos:'
-print 'media:', mean(aviao.passageiros_fora_de_seus_lugares)
-print 'desvio padrao:', std(aviao.passageiros_fora_de_seus_lugares)
-print 'mediana:', median(aviao.passageiros_fora_de_seus_lugares)
+print 'media:', mean(aviao.passageiros_fora_de_seus_assentos)
+print 'desvio padrao:', std(aviao.passageiros_fora_de_seus_assentos)
+print 'mediana:', median(aviao.passageiros_fora_de_seus_assentos)
