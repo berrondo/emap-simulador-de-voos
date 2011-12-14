@@ -55,15 +55,21 @@ class Aviao:
             self.ultimos_passageiros_no_assento_correto += 1
 
     def relatorio_de_voos(self):
+        numero_de_voos = self.numero_de_voos
         passageiros_transportados = self.numero_de_voos * self.capacidade
+        passageiros_fora_de_seus_assentos = sum(self.passageiros_fora_de_seus_assentos)
+        ultimos_passageiros_no_assento_correto = self.ultimos_passageiros_no_assento_correto
         print "total de voos:",
-        print self.numero_de_voos
+        print numero_de_voos
         print "total de passageiros transportados:", 
         print passageiros_transportados
-        print "total de passageiros transportados fora de seus assentos:", 
-        print sum(self.passageiros_fora_de_seus_assentos)
-        print "total de ultimos passageiros transportados em seus assentos:", 
-        print self.ultimos_passageiros_no_assento_correto
+        print "total de passageiros fora de seus assentos:", 
+        print passageiros_fora_de_seus_assentos,
+        print "(%.2f%%)" % ((1.0*passageiros_fora_de_seus_assentos / passageiros_transportados) * 100)
+        print "total de ultimos passageiros no assento correto:", 
+        print ultimos_passageiros_no_assento_correto,
+        print "em", self.numero_de_voos,
+        print "(%.2f%%)" % ((1.0*ultimos_passageiros_no_assento_correto / numero_de_voos) * 100)
 
 
 voos = 1000
