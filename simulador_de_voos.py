@@ -20,6 +20,7 @@ Created on Fri Dez 09 21:34:08 2011
     (**) 99
   """
 
+import datetime
 from random import choice
 from numpy import mean, std, median
 
@@ -30,6 +31,7 @@ class Aviao:
     
     def __init__(self, capacidade):
         self.capacidade = capacidade
+        self.inicio = datetime.datetime.now()
     
     def novo_voo(self):
         self.numero_de_voos += 1
@@ -63,8 +65,9 @@ class Aviao:
         percentual_de_passageiros_fora_de_seus_assentos = (1.0*passageiros_fora_de_seus_assentos / passageiros_transportados) * 100
         percentual_de_ultimos_passageiros_no_assento_correto = (1.0*ultimos_passageiros_no_assento_correto / numero_de_voos) * 100
         
-        print "\n%s passageiros transportados em %s voos\n" % (passageiros_transportados, numero_de_voos)
-        
+        print "\n%s de passageiros transportados em %s voos em %s segundos\n" % (passageiros_transportados, 
+                                                                  numero_de_voos,
+                                                                  (datetime.datetime.now() - self.inicio).seconds)
         print "ultimos passageiros no assento correto:", 
         print ultimos_passageiros_no_assento_correto, "em", self.numero_de_voos,
         print "(%.2f%%)" % percentual_de_ultimos_passageiros_no_assento_correto
@@ -79,7 +82,7 @@ class Aviao:
         print
 
 
-voos = 10000
+voos = 1000000
 passageiros_por_voo = 100
 aviao = Aviao(passageiros_por_voo)
 
