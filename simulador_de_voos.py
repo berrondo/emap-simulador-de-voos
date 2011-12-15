@@ -2,7 +2,7 @@
 """
 Created on Fri Dez 09 21:34:08 2011
 
-@authors: Claudio, Debora, Gerson, Diego, Andre Almeida
+@authors: Andre Almeida, Ariel, Debora, Diego, Claudio, Gerson
 """
 """
     PI Lista 4:
