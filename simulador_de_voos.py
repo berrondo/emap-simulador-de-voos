@@ -38,7 +38,7 @@ class Aviao:
         self.passageiros_fora_de_seus_assentos.append(0)
         self.assentos = range(self.capacidade)
         
-        self.passageiro_e_assento = []
+        # self.passageiro_e_assento = []
         
     def embarca(self, passageiro):
         try:
@@ -50,7 +50,7 @@ class Aviao:
             if not (passageiro == -1 and assento == 0):
                 self.passageiros_fora_de_seus_assentos[-1] += 1
             
-        self.passageiro_e_assento.append((passageiro, assento))
+        # self.passageiro_e_assento.append((passageiro, assento))
         return assento
         
     def verifica_o_ultimo(self, passageiro_esta, em_seu_assento):
@@ -59,7 +59,7 @@ class Aviao:
 
     def relatorio_de_voos(self):
         numero_de_voos = self.numero_de_voos
-        passageiros_transportados = self.numero_de_voos * self.capacidade
+        passageiros_transportados = numero_de_voos * self.capacidade
         passageiros_fora_de_seus_assentos = sum(self.passageiros_fora_de_seus_assentos)
         ultimos_passageiros_no_assento_correto = self.ultimos_passageiros_no_assento_correto
         percentual_de_passageiros_fora_de_seus_assentos = (1.0*passageiros_fora_de_seus_assentos / passageiros_transportados) * 100
@@ -80,8 +80,8 @@ class Aviao:
         print '    max:', max(self.passageiros_fora_de_seus_assentos),
         print '    min:', min(self.passageiros_fora_de_seus_assentos)
         print
-
-
+        
+        
 voos = 1000000
 passageiros_por_voo = 100
 aviao = Aviao(passageiros_por_voo)
